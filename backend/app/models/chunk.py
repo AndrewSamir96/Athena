@@ -1,11 +1,11 @@
 from uuid import UUID
 
+from app.database import Base
+from app.models.note import Note
 from pgvector.sqlalchemy import Vector
 from sqlalchemy import ForeignKey, Integer, Text, text
 from sqlalchemy.dialects.postgresql import UUID as PostgreSQLUUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-
-from app.database import Base
 
 
 class NoteChunk(Base):

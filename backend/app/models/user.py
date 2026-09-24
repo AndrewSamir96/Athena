@@ -1,11 +1,12 @@
 from datetime import datetime
 from uuid import UUID
 
+from app.database import Base
+from app.models.message import ChatMessage
+from app.models.note import Note
 from sqlalchemy import DateTime, String, text
 from sqlalchemy.dialects.postgresql import UUID as PostgreSQLUUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-
-from app.database import Base
 
 
 class User(Base):
