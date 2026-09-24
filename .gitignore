@@ -1,0 +1,9 @@
+# Local environment and Python artifacts
+.env
+backend/.env
+backend/venv/
+__pycache__/
+*.py[cod]
+
+# Local database data
+pgdata/

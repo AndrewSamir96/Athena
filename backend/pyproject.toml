@@ -1,0 +1,11 @@
+[project]
+name = "athena"
+version = "0.1.0"
+requires-python = ">=3.14"
+dependencies = [
+    "alembic>=1.20.0",
+    "fastapi[standard]>=0.141.1",
+    "sqlalchemy>=2.0.54",
+]
+[tool.fastapi]
+entrypoint = "app.main:app"
