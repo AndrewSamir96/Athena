@@ -15,16 +15,16 @@ export default function App() {
       <AuthProvider>
         <BrowserRouter>
           <Routes>
-            <Route path="/notes" element={<NotesListPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
-            <Route path="/notes/upload" element={<UploadPage />} />
-            <Route path="/chat" element={<ChatPage />} />
 
             {/* Everything under here requires a token — ProtectedRoute redirects
                 to /login otherwise. AppShell then adds the sidebar. */}
             <Route element={<ProtectedRoute />}>
               <Route element={<AppShell />}>
+                <Route path="/notes" element={<NotesListPage />} />
+                <Route path="/notes/upload" element={<UploadPage />} />
+                <Route path="/chat" element={<ChatPage />} />
               </Route>
             </Route>
 

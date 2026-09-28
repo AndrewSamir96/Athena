@@ -6,7 +6,8 @@ class Settings(BaseSettings):
     jwt_secret_key: str
     jwt_algorithm: str = "HS256"
     jwt_expire_minutes: int = 60
-    anthropic_api_key: str
+    llm_api_key: str
+    cors_origins: list[str] = ["*"]
 
     class Config:
         env_file = ".env"

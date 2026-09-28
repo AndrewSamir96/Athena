@@ -1,12 +1,17 @@
+from __future__ import annotations
+
 from datetime import datetime
+from typing import TYPE_CHECKING
 from uuid import UUID
 
 from app.database import Base
-from app.models.chunk import NoteChunk
-from app.models.user import User
 from sqlalchemy import DateTime, ForeignKey, String, text
 from sqlalchemy.dialects.postgresql import UUID as PostgreSQLUUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+
+if TYPE_CHECKING:
+	from app.models.chunk import NoteChunk
+	from app.models.user import User
 
 
 class Note(Base):

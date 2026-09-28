@@ -1,11 +1,16 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 from uuid import UUID
 
 from app.database import Base
-from app.models.note import Note
 from pgvector.sqlalchemy import Vector
 from sqlalchemy import ForeignKey, Integer, Text, text
 from sqlalchemy.dialects.postgresql import UUID as PostgreSQLUUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+
+if TYPE_CHECKING:
+	from app.models.note import Note
 
 
 class NoteChunk(Base):

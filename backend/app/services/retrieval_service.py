@@ -1,9 +1,9 @@
 import uuid
 
+from app.models import Note, NoteChunk
 from sqlalchemy.orm import Session
 
-from app.models import Note, NoteChunk
-from backend.app.services.llm_service import embed_texts
+from app.services.openai_llm_service import embed_texts
 
 
 def find_relevant_chunks(db: Session, user_id: uuid.UUID, question: str, top_k: int = 5) -> list[NoteChunk]:

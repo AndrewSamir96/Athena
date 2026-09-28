@@ -1,15 +1,14 @@
-from app.config import settings
 from app.models import NoteChunk
 from openai import OpenAI
 
-from backend.app.schemas.chat import Citation
+from app.schemas.chat import Citation
 
 client = OpenAI()
 
 
 def embed_texts(texts: list[str]) -> list[list[float]]:
     response = client.embeddings.create(
-        model=settings.OPENAI_EMBEDDING_MODEL,
+        model='text-embedding-3-small',
         input=texts,
     )
     return [data.embedding for data in response.data]

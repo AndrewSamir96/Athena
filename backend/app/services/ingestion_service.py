@@ -4,7 +4,7 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from pypdf import PdfReader
 from sqlalchemy.orm import Session
 
-from backend.app.services.llm_service import embed_texts
+from app.services.openai_llm_service import embed_texts
 
 
 def extract_text(file: UploadFile) -> str:
