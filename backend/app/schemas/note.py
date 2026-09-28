@@ -11,4 +11,4 @@ class NoteResponse(BaseModel):
     created_at: datetime
 
     class Config:
-        from_attributes = True  # lets Pydantic read straight from the SQLAlchemy object
+        from_attributes = True 

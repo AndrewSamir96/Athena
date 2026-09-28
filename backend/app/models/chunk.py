@@ -10,24 +10,24 @@ from sqlalchemy.dialects.postgresql import UUID as PostgreSQLUUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 if TYPE_CHECKING:
-	from app.models.note import Note
+    from app.models.note import Note
 
 
 class NoteChunk(Base):
-	__tablename__ = "note_chunks"
+    __tablename__ = "note_chunks"
 
-	id: Mapped[UUID] = mapped_column(
-		PostgreSQLUUID(as_uuid=True),
-		primary_key=True,
-		server_default=text("gen_random_uuid()"),
-	)
-	note_id: Mapped[UUID] = mapped_column(
-		PostgreSQLUUID(as_uuid=True),
-		ForeignKey("notes.id", ondelete="CASCADE"),
-		nullable=False,
-	)
-	chunk_index: Mapped[int] = mapped_column(Integer, nullable=False)
-	content: Mapped[str] = mapped_column(Text, nullable=False)
-	embedding: Mapped[list[float]] = mapped_column(Vector(1536), nullable=False)
+    id: Mapped[UUID] = mapped_column(
+        PostgreSQLUUID(as_uuid=True),
+        primary_key=True,
+        server_default=text("gen_random_uuid()"),
+    )
+    note_id: Mapped[UUID] = mapped_column(
+        PostgreSQLUUID(as_uuid=True),
+        ForeignKey("notes.id", ondelete="CASCADE"),
+        nullable=False,
+    )
+    chunk_index: Mapped[int] = mapped_column(Integer, nullable=False)
+    content: Mapped[str] = mapped_column(Text, nullable=False)
+    embedding: Mapped[list[float]] = mapped_column(Vector(768), nullable=False)
 
-	note: Mapped["Note"] = relationship(back_populates="chunks")
+    note: Mapped[Note] = relationship(back_populates="chunks")

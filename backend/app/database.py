@@ -4,7 +4,7 @@ from sqlalchemy.orm import declarative_base, sessionmaker
 
 DATABASE_URL = settings.database_url
 if not DATABASE_URL:
-	raise RuntimeError("DATABASE_URL must be set in the environment or .env file")
+    raise RuntimeError("DATABASE_URL must be set in the environment or .env file")
 
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
@@ -12,8 +12,10 @@ Base = declarative_base()
 
 
 def get_db():
-	db = SessionLocal()
-	try:
-		yield db
-	finally:
-		db.close()
+    print("[database.get_db] opening session")
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+        print("[database.get_db] closed session")
