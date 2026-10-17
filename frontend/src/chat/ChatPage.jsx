@@ -62,10 +62,13 @@ export default function ChatPage() {
           <div className={`msg-row ${msg.role}`} key={i}>
             <div className="msg-group">
               <div className="msg-bubble">{msg.content}</div>
+
               {msg.citations?.length > 0 && (
                 <div className="msg-citations">
-                  {msg.citations.map((c) => (
-                    <span className="citation-chip" key={c.chunk_id}>
+                  {Array.from(
+                    new Map(msg.citations.map((c) => [c.title, c])).values()
+                  ).map((c) => (
+                    <span className="citation-chip" key={c.title}>
                       {c.title}
                     </span>
                   ))}
@@ -74,6 +77,7 @@ export default function ChatPage() {
             </div>
           </div>
         ))}
+
 
         {asking && (
           <div className="msg-row assistant thinking">

@@ -9,7 +9,7 @@ export default function AppShell() {
   return (
     <div className="shell">
       <aside className="sidebar">
-        <div className="sidebar-brand">Notebook</div>
+        <div className="sidebar-brand">Athena</div>
 
         <nav className="sidebar-nav">
           <NavLink
