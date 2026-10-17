@@ -7,6 +7,45 @@ uploaded notes with source citations.
 The project is intentionally simple: it has one user type, a single frontend
 and backend, and no teams, roles, or collaborative features.
 
+## Technologies used
+
+### Frontend
+
+- React 18
+- Vite
+- JavaScript (ES modules)
+- React Router
+- Axios
+- CSS
+
+### Backend
+
+- Python 3.14+
+- FastAPI and Uvicorn
+- SQLAlchemy
+- Pydantic Settings
+- Alembic
+- PostgreSQL client via `psycopg2`
+- JWT authentication with `python-jose`
+- Password hashing with `bcrypt`
+- Multipart file uploads with `python-multipart`
+- PDF extraction with `pypdf`
+- Text chunking with LangChain Text Splitters
+
+### AI and retrieval
+
+- Ollama for local language-model and embedding inference
+- `embeddinggemma` for embeddings
+- `qwen3.5:0.8b` for answer generation
+- PostgreSQL with the `pgvector` extension for vector similarity search
+
+### Development and infrastructure
+
+- Docker Compose
+- PostgreSQL 16 and pgAdmin
+- `uv` for Python dependency and environment management
+- npm for frontend dependency management
+
 ## Features
 
 ### Authentication
@@ -168,59 +207,3 @@ Open the Vite URL shown in the terminal, normally
 The frontend currently calls the API at `http://localhost:8000`. If the API is
 hosted elsewhere, update the Axios base URL in
 `frontend/src/api/client.js`.
-
-## Database
-
-The migrations create:
-
-- `users` for accounts.
-- `notes` for uploaded note metadata and processing status.
-- `note_chunks` for chunk text and vector embeddings.
-Chat responses are intentionally not persisted. The active chat route returns
-answers and citations only.
-
-## Design review
-
-For a deliberately small personal project, the current design is coherent:
-the main user journey is clear (`register/login -> upload -> wait for ready ->
-ask questions`), the router/service/model split is understandable, and the
-warm paper/ink visual system is consistent with the notes concept. A major
-redesign is not necessary.
-
-The following are the design improvements worth making, in priority order:
-
-1. **Make the LLM provider choice explicit.** The project contains an
-   OpenAI/Anthropic-oriented service alongside the active Ollama service, while
-   the router imports Ollama directly. Remove the unused provider or introduce a
-   configuration-based provider interface so deployment behavior is unambiguous.
-2. **Move ingestion out of the request thread.** PDF parsing and embedding calls
-   happen synchronously during upload. A background job would keep the API
-   responsive and make retries possible. The existing status field provides a
-   good foundation for this.
-3. **Strengthen configuration for non-development use.** Replace wildcard CORS,
-   development credentials, and default-style secrets with environment-specific
-   values. Add explicit upload size/type limits and validate empty or
-   unextractable files.
-4. **Improve operational feedback.** Replace `print` statements with structured
-   logging, return a useful ingestion failure reason, and expose readiness
-   information for the database and Ollama dependencies.
-5. **Add a small test baseline.** Cover auth isolation, note upload/status
-   transitions, retrieval ownership filtering, and the main frontend flows.
-6. **Polish responsive and accessible behavior.** Add a mobile layout for the
-   fixed sidebar, ensure focus-visible states and semantic labels for all
-   controls, and provide a more descriptive citation interaction than
-   non-clickable title chips.
-
-These are mostly production-readiness improvements, not reasons to complicate
-the current simple architecture.
-
-## Current limitations
-
-- Chat answers are generated synchronously and are not streamed.
-- Only one file is uploaded per request.
-- Supported ingestion is PDF and UTF-8 text; scanned PDFs need OCR, which is
-  not included.
-- Chat responses are not persisted between sessions.
-- The frontend uses a fixed local API URL rather than a build-time environment
-  variable.
-- There are no automated backend or frontend tests in the repository.
